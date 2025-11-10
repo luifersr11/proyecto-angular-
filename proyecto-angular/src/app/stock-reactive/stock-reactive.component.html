@@ -1,0 +1,68 @@
+<h3>Formulario de Stock (Reactivo)</h3>
+
+<form [formGroup]="stockForm" (ngSubmit)="guardarStock()" novalidate>
+
+  <div class="form-group mb-3">
+    <label for="producto" class="form-label">Producto:</label>
+    <input type="text" id="producto" class="form-control" formControlName="producto">
+
+    <div *ngIf="productoControl && productoControl.invalid && (productoControl.dirty || productoControl.touched)"
+         class="alert alert-danger mt-1 p-2">
+      <small *ngIf="productoControl.errors?.['required']">
+        El nombre del producto es requerido.
+      </small>
+      <small *ngIf="productoControl.errors?.['minlength']">
+        Debe tener al menos 3 caracteres.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="cantidad" class="form-label">Cantidad:</label>
+    <input type="number" id="cantidad" class="form-control" formControlName="cantidad">
+    
+    <div *ngIf="cantidadControl && cantidadControl.invalid && (cantidadControl.dirty || cantidadControl.touched)"
+         class="alert alert-danger mt-1 p-2">
+      <small *ngIf="cantidadControl.errors?.['required']">
+        La cantidad es requerida.
+      </small>
+      <small *ngIf="cantidadControl.errors?.['min']">
+        La cantidad debe ser al menos 1.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="ubicacion" class="form-label">Ubicación:</label>
+    <select id="ubicacion" class="form-select" formControlName="ubicacion">
+      <option value="">Seleccione una ubicación...</option>
+      <option value="A1">Almacén A1</option>
+      <option value="B2">Almacén B2</option>
+      <option value="C3">Tienda</option>
+    </select>
+
+    <div *ngIf="ubicacionControl && ubicacionControl.invalid && (ubicacionControl.dirty || ubicacionControl.touched)"
+         class="alert alert-danger mt-1 p-2">
+      <small *ngIf="ubicacionControl.errors?.['required']">
+        La ubicación es requerida.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="proveedor" class="form-label">Proveedor (Opcional):</label>
+    <input type="text" id="proveedor" class="form-control" formControlName="proveedor">
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="stockForm.invalid">
+    Guardar Stock
+  </button>
+
+</form>
+
+<hr>
+
+<h4>Datos del Formulario (para depurar):</h4>
+<pre>{{ stockForm.value | json }}</pre>
+<h4>Estado del Formulario (Válido?):</h4>
+<pre>{{ stockForm.valid }}</pre>
